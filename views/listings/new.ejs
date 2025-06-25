@@ -1,0 +1,68 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <div class="row">
+            <div class="container-new col-8 offset-2 p-2">
+                <h2>Create new list</h2>
+                <form method="post" action="/listings" enctype="multipart/form-data" class="needs-validation"
+                    novalidate>
+                    <div class="mb-2">
+                        <label for="title" class="form-label">Title :</label>
+                        <input type="text" name="listing[title]" placeholder="enter the title" class="form-control"
+                            required>
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="description" class="form-label">Description :</label>
+                        <textarea type="text" name="listing[description]" placeholder="enter the description"
+                            class="form-control" required></textarea>
+                        <div class="invalid-feedback">Please enter a short description</div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="image" class="form-label">Upload Image :</label>
+                        <input type="file" name="listing[image]" class="form-control" required>
+                    </div>
+                    <div class="row">
+                        <div class="mb-2 col-4">
+                            <label for="price" class="form-label">Price :</label>
+                            <input type="number" name="listing[price]" placeholder="enter the price"
+                                class="form-control" required>
+                            <div class="invalid-feedback">Price should be valid</div>
+                        </div>
+                        <div class="mb-2 col-8">
+                            <label for="country" class="form-label">Country :</label>
+                            <input type="text" name="listing[country]" placeholder="enter the country"
+                                class="form-control" required>
+                            <div class="invalid-feedback">Country name should be valid</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="location" class="form-label">Location :</label>
+                        <input type="text" name="listing[location]" placeholder="enter the location"
+                            class="form-control" required>
+                        <div class="invalid-feedback">Location should be valid</div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="category">Choose a category :</label><br>
+                        <select class="form-control" name="listing[category]">
+                            <option value="">--Please choose an option--</option>
+                            <option value="Hostels">Hostels</option>
+                            <option value="Rooms">Rooms</option>
+                            <option value="PGs">PGs</option>
+                            <option value="Shared Flats">Shared Flats</option>
+                            <option value="Studio Apartments">Studio Apartments</option>
+                            <option value="Cheap Rent">Cheap Rent</option>
+                            <option value="Iconic Cities">Iconic Cities</option>
+                            <option value="Luxury Villas">Luxury Villas</option>
+                            <option value="House">House</option>
+                            <option value="Penthouses">Penthouses</option>
+                        </select>
+                        <div class="invalid-feedback">Select a valid option</div>
+                    </div>
+                    <br>
+                    <button class="btn btn-dark add-btn">Add</button>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </body>
