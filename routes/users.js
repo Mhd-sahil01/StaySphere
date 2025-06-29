@@ -16,9 +16,24 @@ router
     .get(userController.renderLoginForm)
     .post(
         saveRedirectUrl,
-        passport.authenticate("local", { failureRedirect: "/login", failureFlash: true }),
+        passport.authenticate("local", {
+            failureRedirect: "/login",
+            failureFlash: true
+        }),
         userController.login);
 
-router.get("/logout", userController.logout);
+router
+    .get("/auth/google/callback", passport.authenticate("google", {
+        saveRedirectUrl,
+        successRedirect: "/",
+        failureRedirect: "/login",
+        failureFlash: true,
+    }));
+
+router
+    .get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router
+    .get("/logout", userController.logout);
 
 module.exports = router;

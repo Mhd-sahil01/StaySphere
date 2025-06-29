@@ -36,7 +36,7 @@ const listSchema = new Schema({
       },
     category: {
         type: String,
-        enum: ["Frams", "Rooms", "Views", "Amazing pool", "Beach", "Cheap Rent", "Iconic Cities", "Arctic"],
+        enum: ["Hostels", "Rooms", "PGs", "Shared Flats", "Studio Apartments", "Cheap Rent", "Iconic Cities", "Luxury Villas", "House", "Penthouses"],
     },
 });
 
