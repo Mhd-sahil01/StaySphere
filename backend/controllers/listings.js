@@ -1,11 +1,17 @@
 const Listing = require("../models/listing.js");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
-const geocodingClient = mbxGeocoding({ accessToken: mapToken});
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
-    const allListing = await Listing.find({});
-    res.render("listings/index.ejs", { allListing });
+    try {
+        const allListing = await Listing.find({});
+        res.status(200).json(allListing);
+
+    } catch (err) {
+        console.error("Error in loading allListing", err);
+        res.status(500).json({message: "Internal server error"});
+    }
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -32,10 +38,10 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
     let response = await geocodingClient
-    .forwardGeocode({
-        query: req.body.listing.location,
-        limit: 1
-      })
+        .forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1
+        })
         .send()
 
     let url = req.file.path;
@@ -86,7 +92,7 @@ module.exports.deleteListing = async (req, res) => {
 
 module.exports.showSearchListing = async (req, res) => {
     let search = req.query.search;
-    let allListing = await Listing.find({location: search});
+    let allListing = await Listing.find({ location: search });
     if (allListing.length) {
         res.render("listings/search.ejs", { allListing });
     } else {

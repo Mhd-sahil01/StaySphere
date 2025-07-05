@@ -12,6 +12,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const core = require("cors");
 require("./config/passport.js")(passport);
 
 const rootRouter = require("./routes/root.js");
@@ -36,13 +37,17 @@ async function main() {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
+app.use(
+    core()
+);
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "/public")));
 app.engine("ejs", ejsMate);
 
 const sessionOption = {
-    secret: "mysecretcode",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -65,11 +70,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", rootRouter);
-app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/", usersRouter);
-app.use("/filters", filterRouter);
+app.use("/api", rootRouter);
+app.use("/api/listings", listingRouter);
+app.use("/api/listings/:id/reviews", reviewsRouter);
+app.use("/api", usersRouter);
+app.use("/api/filters", filterRouter);
 
 app.all("*all", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
