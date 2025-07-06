@@ -60,7 +60,7 @@ module.exports.isOwner = async (req, res, next) => {
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     try {
-        let { id, reviewId } = req.params;
+        let { reviewId } = req.params;
         const review = await Review.findById(reviewId);
         if (!review) return res.status(404).json({ message: "Review not found" });
 

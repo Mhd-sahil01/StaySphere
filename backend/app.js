@@ -44,7 +44,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "/public")));
-// app.engine("ejs", ejsMate);
 
 const sessionOption = {
     secret: process.env.SESSION_SECRET,
@@ -60,11 +59,8 @@ const sessionOption = {
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
 });
@@ -75,14 +71,16 @@ app.use("/api/listings/:id/reviews", reviewsRouter);
 app.use("/api", usersRouter);
 app.use("/api/filters", filterRouter);
 
-// app.all("*all", (req, res, next) => {
-//     next(new ExpressError(404, "Page Not Found!"));
-// });
+app.all("*all", (req, res, next) => {
+    const err = new Error(`Cannot find ${req.originalUrl} on this server!`);
+    err.statusCode = 404;
+    next(err);
+});
 
-// app.use((err, req, res, next) => {
-//     let { statusCode = 500, message = "Something went wrong!" } = err;
-//     res.status(statusCode).render("error.ejs", { message });
-// });
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.statusCode || 500).json({ message: err.message });
+});
 
 app.listen(8080, () => {
     console.log("server is listening to port 8080");

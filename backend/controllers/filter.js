@@ -1,12 +1,11 @@
 const Listing = require("../models/listing.js");
 
 module.exports.filter = async (req, res) => {
-    let { id } = req.params;
-    const allListing = await Listing.find({ category: id });
-    if (allListing.length) {
-        res.render("filters/filter.ejs", { allListing });
+    const listings = await Listing.find({ category: req.params.id });
+
+    if (listings.length > 0) {
+        return res.status(200).json(listings);
     } else {
-        req.flash("error", "Category you requested for does not exist!");
-        res.redirect("/listings");
+        return res.status(404).json({ message: "Category you requested for does not exist!" });
     }
-}
+};
