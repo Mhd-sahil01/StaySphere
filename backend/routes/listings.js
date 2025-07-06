@@ -9,7 +9,7 @@ const upload = multer({ storage });
 const listingController = require("../controllers/listings.js");
 
 
-//show all listing , Add new list Route
+//show all list , Add new list Route
 router
     .route("/")
     .get(wrapAsync(listingController.index))
@@ -25,7 +25,7 @@ router
     .put(isLoggedIn, isOwner, upload.single('image'), validateListing,wrapAsync(listingController.updateListing))
     .delete(isLoggedIn, isOwner,wrapAsync(listingController.deleteListing));
 
-//Edit Route
-router.get("/:id/edit", isLoggedIn, isOwner, validateListing, wrapAsync(listingController.renderEditForm));
+// //Edit Route
+// router.get("/:id/edit", isLoggedIn, isOwner, validateListing, wrapAsync(listingController.renderEditForm));
 
 module.exports = router;

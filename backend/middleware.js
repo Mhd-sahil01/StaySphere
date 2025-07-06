@@ -59,11 +59,17 @@ module.exports.isOwner = async (req, res, next) => {
 };
 
 module.exports.isReviewAuthor = async (req, res, next) => {
-    let { id, reviewId } = req.params;
-    const review = await Review.findById(reviewId);
-    if (!review.author._id.equals(res.locals.currUser._id)) {
-        req.flash("error", "You are not the author of this review!");
-        return res.redirect(`/listings/${id}`);
+    try {
+        let { id, reviewId } = req.params;
+        const review = await Review.findById(reviewId);
+        if (!review) return res.status(404).json({ message: "Review not found" });
+
+        if (!review.author._id.equals(res.locals.currUser._id)) {
+            return res.status(403).json({ message: "You are not the author of this review!" });
+        }
+        next();
+    } catch (error) {
+        console.error("Error in isReviewAuthor middleware:", error.message);
+        return res.status(500).json({ message: "Internal server error" });
     }
-    next();
 }

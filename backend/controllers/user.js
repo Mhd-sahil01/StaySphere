@@ -1,40 +1,40 @@
 const User = require("../models/user.js");
 const passport = require("passport");
 
-module.exports.renderSignupForm = (req, res) => {
-    res.render("users/signup.ejs");
-};
-
+// for signup
 module.exports.signup = async (req, res) => {
-    try {
         let { email, username, password } = req.body;
+        // check if any fields are empty
+        if (!email || !username || !password) return res.status(400).json({ message: "All fields are required!" })
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
+        });
+
+        // check if username or email is already exist
+        if (existingUser) {
+            if (existingUser.email === email) return res.status(400).json({ message: "Email already exists!" });
+            if (existingUser.username === username) return res.status(400).json({ message: "Username already exists!" });
+        }
+        // create user
         const newUser = new User({ email, username });
         const registeredUser = await User.register(newUser, password);
         req.login(registeredUser, (err) => {
             if (err) {
-                return next(err);
+                return res.status(500).json({ message: "Internal server error" });;
             }
-            req.flash("success", "Welcome to wanderLust");
-            res.redirect("/listings");
+            res.status(201).json({ message: "Signup successfully" })
         });
-    } catch (err) {
-        req.flash("error", err.message);
-        res.redirect("/signup");
-    }
 };
 
-// module.exports.renderLoginForm = (req, res) => {
-//     res.render("users/login.ejs");
-// };
-
+// for login
 module.exports.login = async (req, res, next) => {
-    try {
+        // login using passport
         passport.authenticate("local", async (err, user, info) => {
             if (err) {
                 console.log("passport error", err);
                 return res.status(500).json({ message: "Internal server error" });
             }
-
+            //if user not exist
             if (!user) {
                 return res.status(401).json({ message: "Invalid password or username" });
             }
@@ -43,21 +43,22 @@ module.exports.login = async (req, res, next) => {
                 if (err) {
                     return res.status(500).json({ message: "Internal server error" });
                 }
-                res.status(200).json({ message: 'Logged in successfully' });
+                res.status(200).json({ message: "Logged in successfully" });
             })
         })(req, res, next);
-    } catch (err) {
+};
+
+//for logout
+module.exports.logout = (req, res, next) => {
+    try {
+        req.logOut((err) => {
+            if (err) {
+                return  res.status(500).json({ message: "Something went wrong" });
+            }
+            res.status(200).json({ message: "Logged out successfully" });
+        });
+    } catch(err){
         console.error("Unexpected error:", err);
         res.status(500).json({ message: "Something went wrong" });
     }
-};
-
-module.exports.logout = (req, res, next) => {
-    req.logOut((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash("success", "successfully logged out!")
-        res.redirect("/listings");
-    });
 };

@@ -8,17 +8,14 @@ const userController = require("../controllers/user.js");
 
 router
     .route("/signup")
-    .get(userController.renderSignupForm)
     .post(wrapAsync(userController.signup));
 
 router
     .route("/login")
-    // .get(userController.renderLoginForm)
-    .post(saveRedirectUrl,userController.login);
+    .post(saveRedirectUrl,wrapAsync(userController.login));
 
 router
     .get("/auth/google/callback", passport.authenticate("google", {
-        saveRedirectUrl,
         successRedirect: "/",
         failureRedirect: "/login",
         failureFlash: true,
