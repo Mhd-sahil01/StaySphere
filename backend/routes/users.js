@@ -13,14 +13,8 @@ router
 
 router
     .route("/login")
-    .get(userController.renderLoginForm)
-    .post(
-        saveRedirectUrl,
-        passport.authenticate("local", {
-            failureRedirect: "/login",
-            failureFlash: true
-        }),
-        userController.login);
+    // .get(userController.renderLoginForm)
+    .post(saveRedirectUrl,userController.login);
 
 router
     .get("/auth/google/callback", passport.authenticate("google", {

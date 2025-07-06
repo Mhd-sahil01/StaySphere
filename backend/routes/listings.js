@@ -13,10 +13,7 @@ const listingController = require("../controllers/listings.js");
 router
     .route("/")
     .get(wrapAsync(listingController.index))
-    .post(isLoggedIn, upload.single('listing[image]'), validateListing, wrapAsync(listingController.createListing));
-
-//Add new list Route
-router.get("/new", isLoggedIn, listingController.renderNewForm);
+    .post(isLoggedIn, upload.single('image'), validateListing,wrapAsync(listingController.createListing));
 
 //search and list all based on location
 router.get("/place", wrapAsync(listingController.showSearchListing))
@@ -25,8 +22,8 @@ router.get("/place", wrapAsync(listingController.showSearchListing))
 router
     .route("/:id")
     .get(wrapAsync(listingController.showListing))
-    .put(isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(listingController.updateListing))
-    .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
+    .put(isLoggedIn, isOwner, upload.single('image'), validateListing,wrapAsync(listingController.updateListing))
+    .delete(isLoggedIn, isOwner,wrapAsync(listingController.deleteListing));
 
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, validateListing, wrapAsync(listingController.renderEditForm));
