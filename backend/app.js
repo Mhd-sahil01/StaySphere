@@ -33,7 +33,10 @@ async function main() {
 }
 
 app.use(
-    core()
+    core({
+        origin: "http://localhost:5173",
+        Credential:true,
+    })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
