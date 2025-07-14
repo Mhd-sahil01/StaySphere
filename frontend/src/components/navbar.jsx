@@ -1,12 +1,18 @@
 
 function Navbar() {
     return (
-        <div className="navbar bg-base-100">
-            <div className="navbar-start gap-2">
-                <a className="text-lg font-bold">StaySphere</a>
-                <form className="search-bar flex gap-1 mx-1">
-                    <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-full" />
+        <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm">
+            <div className="navbar-start gap-1 md:gap-2 flex-1">
+                <a className="text-lg font-bold whitespace-nowrap">StaySphere</a>
+
+                {/* Search bar  */}
+                <form className="search-bar hidden md:flex gap-1 mx-1 flex-1 max-w-md">
+                    <div className="form-control flex-1">
+                        <input
+                            type="text"
+                            placeholder="Search Locations..."
+                            className="input input-bordered w-full"
+                        />
                     </div>
                     <button className="btn btn-ghost btn-circle" type="submit">
                         <svg
@@ -24,9 +30,12 @@ function Navbar() {
                     </button>
                 </form>
             </div>
-            <div className="navbar-end">
+
+            <div className="navbar-end flex-none">
+
+                {/* Mobile menu button - visible only on small screens */}
                 <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle lg:hidden">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle md:hidden">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -49,14 +58,15 @@ function Navbar() {
                         <li><a>Login</a></li>
                     </ul>
                 </div>
-                <div className="lg:flex lg:gap-1 hidden">
-                <a className="btn btn-ghost text-lg">Explore</a>
-                <a className="btn btn-ghost text-base">Rent It Now</a>
-                <a className="btn btn-ghost text-base">Signup</a>
-                <a className="btn btn-ghost text-base">Login</a>
+
+                {/* Desktop navigation - hidden on mobile */}
+                <div className="hidden md:flex md:gap-1 lg:gap-2">
+                    <a className="btn btn-ghost min-w-20">Explore</a>
+                    <a className="btn btn-ghost min-w-20">Rent It Now</a>
+                    <a className="btn btn-ghost min-w-20">Signup</a>
+                    <a className="btn btn-ghost min-w-20">Login</a>
                 </div>
             </div>
-
         </div>
     )
 }

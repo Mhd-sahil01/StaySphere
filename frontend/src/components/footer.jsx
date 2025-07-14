@@ -1,3 +1,4 @@
+
 const Footer = () => {
     return (
         <footer className="footer footer-center flex flex-col gap-5 bg-base-200 text-base-content p-4">

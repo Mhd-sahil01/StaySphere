@@ -62,3 +62,11 @@ module.exports.logout = (req, res, next) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+// for looking the user is present or not from the frontend
+module.exports.status = (req, res) => {
+    res.json({
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user || null
+    });
+};

@@ -15,14 +15,18 @@ router
     .post(saveRedirectUrl,wrapAsync(userController.login));
 
 router
-    .get("/auth/google/callback", passport.authenticate("google", {
+    .route("/status")
+    .get(userController.status);
+
+router
+    .get("/google/callback", passport.authenticate("google", {
         successRedirect: "/",
         failureRedirect: "/login",
         failureFlash: true,
     }));
 
 router
-    .get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+    .get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router
     .get("/logout", userController.logout);

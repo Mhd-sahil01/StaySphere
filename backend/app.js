@@ -9,7 +9,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
-const core = require("cors");
+const cors = require("cors");
 require("./config/passport.js")(passport);
 
 const rootRouter = require("./routes/root.js");
@@ -33,9 +33,9 @@ async function main() {
 }
 
 app.use(
-    core({
+    cors({
         origin: "http://localhost:5173",
-        Credential:true,
+        credentials:true,
     })
 );
 app.use(express.json());
@@ -66,7 +66,7 @@ app.use((req, res, next) => {
 app.use("/api", rootRouter);
 app.use("/api/listings", listingRouter);
 app.use("/api/listings/:id/reviews", reviewsRouter);
-app.use("/api", usersRouter);
+app.use("/api/auth", usersRouter);
 app.use("/api/filters", filterRouter);
 
 app.all("*all", (req, res, next) => {
