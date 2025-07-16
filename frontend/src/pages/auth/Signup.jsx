@@ -128,7 +128,7 @@ function Signup() {
               <p>Already have an account? 
                 <Link to="/login" className="text-green-600 font-medium hover:underline">Login</Link></p>
               <div className="mt-2 flex items-center justify-center gap-1">
-                <span className="text-gray-500">or sign up with</span>
+                <span className="text-gray-500">or signup with</span>
                 <a
                   href="https://google.com"
                   target="_blank"

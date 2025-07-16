@@ -59,8 +59,16 @@ function Navbar() {
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li><Link >Explore</Link></li>
                         <li><Link to={"/new"}>Rent It Now</Link></li>
-                        <li><Link to={"/signup"}>Signup</Link></li>
-                        <li><Link to={"/login"}>Login</Link></li>
+                        {
+                            user ? (
+                                <li><Link onClick={logout}><LogOut size={15}/>Logout</Link></li>
+                            ) : (
+                                <>
+                                    <li><Link to={"/signup"}>Signup</Link></li>
+                                    <li><Link to={"/login"}>Login</Link></li>
+                                </>
+                            )
+                        }
                     </ul>
                 </div>
 
