@@ -1,5 +1,10 @@
+import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import { LogOut } from "lucide-react";
 
 function Navbar() {
+    const { logout, user } = useAuthStore();
+
     return (
         <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm">
             <div className="navbar-start gap-1 md:gap-2 flex-1">
@@ -52,19 +57,25 @@ function Navbar() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><a>Rent It Now</a></li>
-                        <li><a>Explore</a></li>
-                        <li><a>Signup</a></li>
-                        <li><a>Login</a></li>
+                        <li><Link >Explore</Link></li>
+                        <li><Link to={"/new"}>Rent It Now</Link></li>
+                        <li><Link to={"/signup"}>Signup</Link></li>
+                        <li><Link to={"/login"}>Login</Link></li>
                     </ul>
                 </div>
 
                 {/* Desktop navigation - hidden on mobile */}
                 <div className="hidden md:flex md:gap-1 lg:gap-2">
-                    <a className="btn btn-ghost min-w-20">Explore</a>
-                    <a className="btn btn-ghost min-w-20">Rent It Now</a>
-                    <a className="btn btn-ghost min-w-20">Signup</a>
-                    <a className="btn btn-ghost min-w-20">Login</a>
+                    <Link className="btn btn-ghost min-w-20">Explore</Link>
+                    <Link to={"/new"} className="btn btn-ghost min-w-20">Rent It Now</Link>
+                    {user ? (
+                        <Link onClick={logout} className="btn btn-ghost min-w-20">Logout <LogOut size={20} /> </Link>
+                    ) : (
+                        <>
+                            <Link to={"/signup"} className="btn btn-ghost min-w-20">Signup</Link>
+                            <Link to={"/login"} className="btn btn-ghost min-w-20">Login</Link>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
