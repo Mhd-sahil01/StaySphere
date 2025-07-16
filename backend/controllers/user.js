@@ -63,7 +63,7 @@ module.exports.logout = (req, res, next) => {
     }
 };
 
-// for looking the user is present or not from the frontend
+// for looking the user is present 
 module.exports.status = (req, res) => {
     res.json({
         isAuthenticated: req.isAuthenticated(),

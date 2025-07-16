@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
+import { Mail, User, Lock, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 function Signup() {
-    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -11,9 +13,22 @@ function Signup() {
 
     const { signup, isSignin } = useAuthStore();
 
-    const validateForm = () => { }
-    const handleSubmit = (event) => { }
-    
+    const validateForm = () => {
+        if(!formData.username.trim()) return toast.error("Username is required");
+        if(!formData.email.trim()) return toast.error("Email is required");
+        if(!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+        if(!formData.password) return toast.error("Password is required");
+        if(formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+
+        return true;
+     }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const success = validateForm()
+
+        if(success === true) signup(formData);
+     }
+
     return (
         <div className="min-h-[75vh] flex items-center justify-center bg-gradient-to-br from-green-50 to-lime-100 p-4">
         <div className="container flex flex-col lg:flex-row h-full rounded-2xl overflow-hidden shadow-xl max-w-6xl">
@@ -49,58 +64,70 @@ function Signup() {
             <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
             
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md border border-gray-100">
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email
+                    <span className="flex items-center gap-2"><Mail /> Email</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
                     placeholder="your@email.com"
-                    required
+                    value={formData.email}
+                    onChange={(event) => setFormData({...formData, email: event.target.value})}
                   />
                 </div>
       
                 <div className="space-y-2">
                   <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Username
+                  <span className="flex items-center gap-2"><User /> Username</span>
                   </label>
                   <input
                     type="text"
                     id="username"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
                     placeholder="username"
-                    required
+                    value={formData.username}
+                    onChange={(event) => setFormData({...formData, username: event.target.value})}
                   />
                 </div>
       
                 <div className="space-y-2">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Password
+                  <span className="flex items-center gap-2"><Lock /> Password</span>
                   </label>
                   <input
                     type="password"
                     id="password"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
                     placeholder="••••••••"
-                    required
+                    value={formData.password}
+                    onChange={(event) => setFormData({...formData, password: event.target.value})}
                   />
                 </div>
       
                 <button
                   type="submit"
                   className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all hover:scale-[1.02]"
+                  disabled={isSignin}
                 >
-                  Sign Up
+                    {isSignin ? (
+                        <>
+                            <Loader2 className="animate-spin size-4"/>
+                            Loading...
+                        </>
+                    ) : (
+                        "Sign Up"
+                    )}
                 </button>
               </form>
             </div>
             
             <div className="text-center text-sm text-gray-600">
-              <p>Already have an account? <a href="/login" className="text-green-600 font-medium hover:underline">Login</a></p>
-              <div className="mt-3 flex items-center justify-center gap-2">
+              <p>Already have an account? 
+                <Link to="/login" className="text-green-600 font-medium hover:underline">Login</Link></p>
+              <div className="mt-2 flex items-center justify-center gap-1">
                 <span className="text-gray-500">or sign up with</span>
                 <a
                   href="https://google.com"

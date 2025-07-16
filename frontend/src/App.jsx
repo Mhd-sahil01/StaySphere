@@ -7,7 +7,8 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import { useAuthStore } from './store/useAuthStore.js';
 import { useEffect } from 'react';
-import { Loader } from 'lucide-react';
+import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { user, checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore();
@@ -36,6 +37,7 @@ function App() {
         <Route path='/new' element={user? <CreateNew /> : <Navigate to={"/login"}/>} />
       </Routes>
 
+      <Toaster/>
       <Footer />
     </div>
   )
