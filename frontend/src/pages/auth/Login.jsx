@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { User, Lock, Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 function Login () {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: ""
@@ -19,11 +20,20 @@ function Login () {
 
         return true;
      }
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const success = validateForm()
 
-        if(success === true) login(formData);
+        if(success === true) {
+            await login(formData);
+            navigate("/");
+        }
+
+        setFormData({
+            username: "",
+            password: ""
+        });
+        
      }
     return (
         <div className="min-h-[75vh] flex items-center justify-center bg-gradient-to-br from-green-50 to-lime-100 p-4">

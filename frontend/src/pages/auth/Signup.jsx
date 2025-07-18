@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Mail, User, Lock, Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 function Signup() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -26,7 +27,10 @@ function Signup() {
         event.preventDefault();
         const success = validateForm()
 
-        if(success === true) signup(formData);
+        if(success === true) {
+          signup(formData);
+          navigate("/");
+        }
      }
 
     return (

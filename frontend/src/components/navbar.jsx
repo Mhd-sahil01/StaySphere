@@ -57,7 +57,7 @@ function Navbar() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><Link >Explore</Link></li>
+                        <li><Link to={"/"}>Explore</Link></li>
                         <li><Link to={"/new"}>Rent It Now</Link></li>
                         {
                             user ? (
@@ -74,7 +74,7 @@ function Navbar() {
 
                 {/* Desktop navigation - hidden on mobile */}
                 <div className="hidden md:flex md:gap-1 lg:gap-2">
-                    <Link className="btn btn-ghost min-w-20">Explore</Link>
+                    <Link to={"/"} className="btn btn-ghost min-w-20">Explore</Link>
                     <Link to={"/new"} className="btn btn-ghost min-w-20">Rent It Now</Link>
                     {user ? (
                         <Link onClick={logout} className="btn btn-ghost min-w-20">Logout <LogOut size={20} /> </Link>
