@@ -35,7 +35,7 @@ const Filter = () => {
                         <div
                             key={item.id}
                             onClick={() => filterFetchData(item.path)}
-                            className="flex flex-col items-center cursor-pointer text-gray-400 hover:text-gray-600 min-w-[90px] flex-shrink-0 rounded-xl shadow-sm hover:scale-105 transition-transform"
+                            className="flex flex-col items-center cursor-pointer text-gray-400 hover:text-gray-600 min-w-[90px] rounded-xl shadow-sm hover:scale-105 transition-transform"
                         >
                             <FontAwesomeIcon
                                 icon={item.icon}
