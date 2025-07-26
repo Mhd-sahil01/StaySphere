@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../lib/axios';
 import ListingCard from '../../components/ListingCard';
-import Filter from '../../components/Filter';
-import { toast } from 'react-hot-toast';
+import Filter from '../../features/filter/Filter';
 
 function Index() {
     const [listings, setListings] = useState([]);

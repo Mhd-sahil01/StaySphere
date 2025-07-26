@@ -6,7 +6,7 @@ import CreateNew from "./pages/listings/CreateNew.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import FilterDisplay from './pages/listings/FilterDisplay.jsx';
-import { useAuthStore } from './store/useAuthStore.js';
+import { useAuthStore } from './features/auth/useAuthStore.js';
 import { useEffect } from 'react';
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";

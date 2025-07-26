@@ -1,6 +1,6 @@
 import ListingCard from "../../components/ListingCard";
-import { useFilterStore } from "../../store/useFilterStore";
-import Filter from "../../components/Filter";
+import { useFilterStore } from "../../features/filter/useFilterStore";
+import Filter from "../../features/filter/Filter";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { useParams } from "react-router-dom";
