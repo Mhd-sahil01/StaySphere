@@ -1,9 +1,25 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../features/auth/useAuthStore";
 import { LogOut } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
     const { logout, user } = useAuthStore();
+    const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/search?place=${encodeURIComponent(searchQuery.trim())}`)
+        }
+        setSearchQuery("");
+    }
+
+    const handleInput = (event) => {
+        setSearchQuery(event.target.value);
+    }
 
     return (
         <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm">
@@ -11,12 +27,14 @@ function Navbar() {
                 <a className="text-lg font-bold whitespace-nowrap">StaySphere</a>
 
                 {/* Search bar  */}
-                <form className="search-bar hidden md:flex justify-center gap-1 mx-1 flex-1 w-1/2 max-w-md">
+                <form onSubmit={handleSearch} className="search-bar hidden md:flex justify-center gap-1 mx-1 flex-1 w-1/2 max-w-md">
                     <div className="form-control flex-1">
                         <input
                             type="text"
                             placeholder="Search Locations..."
                             className="input input-bordered w-full"
+                            value={searchQuery}
+                            onChange={handleInput}
                         />
                     </div>
                     <button className="btn btn-ghost btn-circle" type="submit">
@@ -57,34 +75,37 @@ function Navbar() {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         {/* Mobile search bar */}
-                        <li><form className="flex gap-1 w-full relative">
-                            <input
-                                type="text"
-                                placeholder="Locations..."
-                                className="input input-bordered flex-1 w-11/12"
-                            />
-                            <button type="submit" className="btn btn-ghost btn-circle absolute right-0">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
-                            </button>
-                        </form>
+                        <li>
+                            <form onSubmit={handleSearch} className="flex gap-1 w-full relative">
+                                <input
+                                    type="text"
+                                    placeholder="Locations..."
+                                    className="input input-bordered flex-1 w-11/12"
+                                    value={searchQuery}
+                                    onChange={handleInput}
+                                />
+                                <button type="submit" className="btn btn-ghost btn-circle absolute right-0">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        />
+                                    </svg>
+                                </button>
+                            </form>
                         </li>
                         <li><Link to={"/"}>Explore</Link></li>
                         <li><Link to={"/new"}>Rent It Now</Link></li>
                         {
                             user ? (
-                                <li><Link onClick={logout}><LogOut size={15}/>Logout</Link></li>
+                                <li><Link onClick={logout}><LogOut size={15} />Logout</Link></li>
                             ) : (
                                 <>
                                     <li>

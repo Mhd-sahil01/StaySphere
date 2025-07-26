@@ -1,3 +1,7 @@
+import { useAuthStore } from './features/auth/useAuthStore.js';
+import { useEffect } from 'react';
+import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Index from "./pages/listings/Index.jsx";
 import Signup from "./pages/auth/Signup.jsx";
@@ -6,10 +10,7 @@ import CreateNew from "./pages/listings/CreateNew.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import FilterDisplay from './pages/listings/FilterDisplay.jsx';
-import { useAuthStore } from './features/auth/useAuthStore.js';
-import { useEffect } from 'react';
-import { Loader } from "lucide-react";
-import { Toaster } from "react-hot-toast";
+import SearchResult from './pages/listings/SearchResult.jsx';
 
 function App() {
   const { user, checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore();
@@ -37,6 +38,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/filters/:type' element={<FilterDisplay />} />
         <Route path='/new' element={user? <CreateNew /> : <Navigate to={"/login"}/>} />
+        <Route path="/search" element={<SearchResult />} />
       </Routes>
       <Toaster/>
       </div>
