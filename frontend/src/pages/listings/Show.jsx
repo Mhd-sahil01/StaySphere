@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../lib/axios";
 import { Loader } from "lucide-react";
+import Review from "../../components/Review";
 
 function Show() {
     const { id } = useParams();
@@ -74,6 +75,9 @@ function Show() {
                     </button>
                 </div>
             </div>
+
+            <hr className="my-6 border-gray-300" />
+            <Review listing={listing} setListing={setListing} listingId={id}/>
         </div>
     );
 }

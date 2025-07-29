@@ -5,6 +5,7 @@ module.exports.createReview = async (req, res) => { // to create a review
     const { comment, rating } = req.body;
     let listing = await Listing.findById(req.params.id);
     if(!listing) return res.status(400).json({message: "Listing not exist!"});
+    if (!req.user) return res.status(401).json({ message: "User not authenticated" });
     let newReview = new Review({
         rating,
         comment
