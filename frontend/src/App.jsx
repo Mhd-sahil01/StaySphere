@@ -11,6 +11,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import FilterDisplay from './pages/listings/FilterDisplay.jsx';
 import SearchResult from './pages/listings/SearchResult.jsx';
+import Show from './pages/listings/Show.jsx';
 
 function App() {
   const { user, checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore();
@@ -39,6 +40,7 @@ function App() {
         <Route path='/filters/:type' element={<FilterDisplay />} />
         <Route path='/new' element={user? <CreateNew /> : <Navigate to={"/login"}/>} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path='/show/:id' element={<Show/>}/>
       </Routes>
       <Toaster/>
       </div>

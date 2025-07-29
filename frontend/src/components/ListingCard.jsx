@@ -4,7 +4,7 @@ function ListingCard({ listing }) {
     return (
         <>
             <Link
-                to={`/listings/${listing._id}`}
+                to={`/show/${listing._id}`}
                 key={listing._id}
                 className="hover:scale-[1.02] transition-transform duration-300"
             >
