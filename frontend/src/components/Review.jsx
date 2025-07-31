@@ -22,6 +22,7 @@ function Review({ listing, setListing, listingId }) {
         } catch (error) {
             if(error.response && error.response.status === 401) {
                 toast.error("User not authenticated, please login");
+                navigate(`/login`);
             } else {
                 toast.error("An error occurred. Please try again.");
                 console.error("Error submitting review", error);
