@@ -12,7 +12,6 @@ const passport = require("passport");
 const cors = require("cors");
 require("./config/passport.js")(passport);
 
-const rootRouter = require("./routes/root.js");
 const listingRouter = require("./routes/listings.js");
 const reviewsRouter = require("./routes/reviews.js");
 const usersRouter = require("./routes/users.js");
@@ -63,7 +62,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/api", rootRouter);
 app.use("/api/listings", listingRouter);
 app.use("/api/listings/:id/reviews", reviewsRouter);
 app.use("/api/auth", usersRouter);
