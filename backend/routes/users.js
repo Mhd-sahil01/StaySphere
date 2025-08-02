@@ -18,12 +18,21 @@ router
     .route("/status")
     .get(userController.status);
 
-router
-    .get("/google/callback", passport.authenticate("google", {
-        successRedirect: "/",
-        failureRedirect: "/login",
-        failureFlash: true,
-    }));
+// router
+//     .get("/google/callback", passport.authenticate("google", {
+//         successRedirect: "/",
+//         failureRedirect: "/login",
+//         failureFlash: true,
+//     }));
+
+// google login api    
+
+router.get("/login/failed", userController.loginFailedGoogle);
+
+router.get("/google/callback", passport.authenticate("google", {
+    successRedirect:process.env.GOOGLE_CLIENT_URL,
+    failureRedirect:"/login/failed"
+}));
 
 router
     .get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));

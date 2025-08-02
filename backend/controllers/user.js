@@ -69,4 +69,8 @@ module.exports.status = (req, res) => {
         isAuthenticated: req.isAuthenticated(),
         user: req.user || null
     });
+}; 
+
+module.exports.loginFailedGoogle = (req, res) => {
+    res.status(401).json({error:true, message:"login failed"});
 };
