@@ -14,7 +14,7 @@ export const useAuthStore = create((set) => ({
             const result = await axiosInstance.get("auth/status");
             set({
                 user: result.data,
-                isAuthenticated: result.data.isAuthenticated,
+                isAuthenticated: isAuthenticated,
             })
         } catch (error) {
             console.log("Error in checkAuth:", error);
@@ -55,7 +55,7 @@ export const useAuthStore = create((set) => ({
     logout: async () => {
         try {
             await axiosInstance.get("auth/logout");
-            set({user: null});
+            set({user: null, isAuthenticated: false});
             toast.success("Loggout successfully");
         } catch (error) {
             toast.error(error.response.data.message);
