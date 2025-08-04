@@ -13,8 +13,8 @@ export const useAuthStore = create((set) => ({
         try {
             const result = await axiosInstance.get("auth/status");
             set({
-                user: result.data,
-                isAuthenticated: isAuthenticated,
+                user: result.data.user,
+                isAuthenticated: result.data.isAuthenticated,
             })
         } catch (error) {
             console.log("Error in checkAuth:", error);
@@ -27,7 +27,7 @@ export const useAuthStore = create((set) => ({
         try {
             set({isSignin: true});
             const result = await axiosInstance.post("auth/signup", data);
-            set({user: result.data})
+            set({user: result.data.user, isAuthenticated: result.data.isAuthenticated})
             toast.success("Account created sucessfully");
         } catch (error) {
             toast.error(error.response.data.message);
@@ -41,8 +41,7 @@ export const useAuthStore = create((set) => ({
         try{
             set({isLogin: true});
             const result = await axiosInstance.post("auth/login", data);
-            set({user: result.data});
-            console.log(result.data);
+            set({user: result.data.user, isAuthenticated: result.data.isAuthenticated});
             toast.success("Logged in sucessfully");
         } catch (error) {
             toast.error(error.response.data.message);

@@ -21,6 +21,21 @@ function Login() {
 
     return true;
   }
+
+  const handleGoogleLogin = () => {
+    try {
+      window.location.href = `${import.meta.env.VITE_BACKEND_URl}/auth/google`;
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error("Login failed, Try again");
+        navigate("/login");
+      } else {
+        toast.error("Login failed");
+        console.error(error);
+      }
+    }
+  };  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const success = validateForm()
@@ -36,6 +51,7 @@ function Login() {
     });
 
   }
+
   return (
     <div className="min-h-[75vh] flex items-center justify-center bg-gradient-to-br from-green-50 to-lime-100 p-4">
       <div className="container flex flex-col lg:flex-row h-full rounded-2xl overflow-hidden shadow-xl max-w-6xl">
@@ -99,7 +115,7 @@ function Login() {
             <div className="mt-2 flex items-center justify-center gap-1">
               <span className="text-gray-500">or login with</span>
               <a
-                href="https://google.com"
+                onClick={handleGoogleLogin}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Google"
