@@ -2,9 +2,11 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../lib/axios";
+import { Loader } from "lucide-react";
 
 function CreateNew() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -42,6 +44,7 @@ function CreateNew() {
     payload.append("image", formData.image);
 
     try {
+      setIsLoading(true);
       await axiosInstance.post("/listings", payload, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -54,13 +57,12 @@ function CreateNew() {
       if (error.response.status === 401) {
         toast.error("User not authenticated, please login");
         navigate("/login");
-      } else if (error.response.status === 403) {
-        toast.error("You are not authorized to create");
-        navigate(`/`);
       } else {
         toast.error("Failed to create listing");
         console.error(error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -141,10 +143,19 @@ function CreateNew() {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+            className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 flex items-center justify-center gap-2"
+            disabled={isLoading}
           >
-            Add
+            {isLoading ? (
+              <>
+                <Loader className="animate-spin w-5 h-5" />
+                Creating...
+              </>
+            ) : (
+              "Add"
+            )}
           </button>
+
         </form>
       </div>
     </div>
