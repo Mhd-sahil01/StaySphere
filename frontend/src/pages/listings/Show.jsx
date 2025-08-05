@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../lib/axios";
 import { Loader } from "lucide-react";
 import Review from "../../components/Review";
+import { toast } from "react-hot-toast";
 
 function Show() {
     const { id } = useParams();
@@ -21,6 +22,25 @@ function Show() {
         };
         fetchListing();
     }, [id]);
+
+    const handleDelete = async () => {
+        try {
+            await axiosInstance.delete(`/listings/${id}`);
+            navigate("/");
+            toast.success("successfully Deleted!");
+        } catch (error) {
+            if (error && error.response.status === 401) {
+                toast.error("User not authenticated, please login");
+                navigate("/login");
+            } else if (error.response.status === 403) {
+                toast.error("This property does not belong to you");
+                navigate(`/show/${id}`);
+            } else {
+                toast.error("Failed to delete");
+                console.error(error);
+            }
+        }
+    }
 
     if (!listing) {
         return (
@@ -63,12 +83,7 @@ function Show() {
                         Edit
                     </button>
                     <button
-                        onClick={() =>
-                            axiosInstance
-                                .delete(`/listings/${id}`)
-                                .then(() => navigate("/"))
-                                .catch(console.error)
-                        }
+                        onClick={handleDelete}
                         className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
                     >
                         Delete
