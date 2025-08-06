@@ -1,5 +1,6 @@
 const Listing = require("../models/listing.js");
 
+// for filtering list by diff. category
 module.exports.filter = async (req, res) => {
     const listings = await Listing.find({ category: req.params.id });
 

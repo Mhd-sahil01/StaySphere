@@ -2,6 +2,7 @@ const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
 const { listingSchema, reviewSchema } = require("./config/schema.js");
 
+// validating the list by joi
 module.exports.validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
     if (error) {
@@ -11,6 +12,7 @@ module.exports.validateListing = (req, res, next) => {
     next()
 }
 
+// validating the review by joi
 module.exports.validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -20,6 +22,7 @@ module.exports.validateReview = (req, res, next) => {
     next()
 }
 
+// check if the user is (login/signup) or not
 module.exports.isLoggedIn = (req, res, next) => {
     try {
         if (!req.isAuthenticated() || !req.user) {
@@ -32,13 +35,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
 };
 
-module.exports.saveRedirectUrl = (req, res, next) => {
-    if (req.session.redirectUrl) {
-        res.locals.redirectUrl = req.session.redirectUrl;
-    }
-    next();
-}
-
+// check if the user is the owner of the list
 module.exports.isOwner = async (req, res, next) => {
     try {
         let { id } = req.params;
@@ -57,6 +54,7 @@ module.exports.isOwner = async (req, res, next) => {
     }
 };
 
+// check if the user is the author of the review
 module.exports.isReviewAuthor = async (req, res, next) => {
     try {
         let { reviewId } = req.params;

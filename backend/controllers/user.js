@@ -71,6 +71,7 @@ module.exports.status = (req, res) => {
     });
 }; 
 
+// for showing the failed-login in (google api)
 module.exports.loginFailedGoogle = (req, res) => {
     res.status(401).json({error:true, message:"login failed"});
 };

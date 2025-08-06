@@ -3,8 +3,8 @@ const User = require("../models/user.js");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 module.exports = function (passport) {
-    passport.use(new LocalStrategy(User.authenticate()));
-    passport.use(new GoogleStrategy({
+    passport.use(new LocalStrategy(User.authenticate())); // Strategy for normal login/signup
+    passport.use(new GoogleStrategy({ // Strategy for google login/signup (using google api)
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL,

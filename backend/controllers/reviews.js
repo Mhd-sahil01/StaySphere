@@ -1,7 +1,8 @@
 const Review = require("../models/review.js");
 const Listing = require("../models/listing.js");
 
-module.exports.createReview = async (req, res) => { // to create a review
+// to create a review
+module.exports.createReview = async (req, res) => { 
     const { comment, rating } = req.body;
     let listing = await Listing.findById(req.params.id);
     if(!listing) return res.status(400).json({message: "Listing not exist!"});
@@ -17,7 +18,8 @@ module.exports.createReview = async (req, res) => { // to create a review
     res.status(201).json({ message: "New Review Created!" })
 };
 
-module.exports.deleteReview = async (req, res) => { // to delete a review
+// to delete a review
+module.exports.deleteReview = async (req, res) => { 
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { review: reviewId } });
     const deleteReview = await Review.findByIdAndDelete(reviewId);

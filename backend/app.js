@@ -47,8 +47,8 @@ const sessionOption = {
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        expires: Date.now() + 5 * 24 * 60 * 60 * 1000,
+        maxAge: 5 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     },
 };
@@ -56,11 +56,6 @@ const sessionOption = {
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use((req, res, next) => {
-    res.locals.currUser = req.user;
-    next();
-});
 
 app.use("/api/listings", listingRouter);
 app.use("/api/listings/:id/reviews", reviewsRouter);
