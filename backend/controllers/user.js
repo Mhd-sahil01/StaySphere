@@ -22,7 +22,11 @@ module.exports.signup = async (req, res) => {
             if (err) {
                 return res.status(500).json({ message: "Internal server error" });;
             }
-            res.status(201).json({ message: "Signup successfully" })
+            res.status(201).json({ 
+                message: "Signup successfully", 
+                user: req.user, 
+                isAuthenticated: true 
+            });
         });
 };
 
@@ -43,7 +47,11 @@ module.exports.login = async (req, res, next) => {
                 if (err) {
                     return res.status(500).json({ message: "Internal server error" });
                 }
-                res.status(200).json({ message: "Logged in successfully" });
+                res.status(200).json({ 
+                    message: "Logged in successfully", 
+                    user: req.user, 
+                    isAuthenticated: true 
+                });
             })
         })(req, res, next);
 };
