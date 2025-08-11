@@ -79,6 +79,7 @@ function Review({ listing, setListing, listingId }) {
                     <textarea
                         id="comment"
                         rows="3"
+                        maxLength={250} 
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         className="w-full border border-gray-300 rounded-md p-2"
@@ -107,7 +108,7 @@ function Review({ listing, setListing, listingId }) {
                                     ))}
                                 </div>
 
-                                <p className="text-gray-600">{review.comment}</p>
+                                <p className="text-gray-600 break-words whitespace-pre-wrap">{review.comment}</p>
                                 <button
                                     onClick={() => handleDeleteReview(review._id)}
                                     className="mt-2 px-3 py-1 border border-gray-800 text-gray-800 rounded hover:bg-gray-800 hover:text-white transition"
