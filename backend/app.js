@@ -57,6 +57,12 @@ app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// store current user
+app.use((req, res, next) => {
+    res.locals.currUser = req.user;
+    next();
+});
+
 app.use("/api/listings", listingRouter);
 app.use("/api/listings/:id/reviews", reviewsRouter);
 app.use("/api/auth", usersRouter);

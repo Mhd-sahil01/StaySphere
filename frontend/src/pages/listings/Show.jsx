@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../lib/axios";
 import { Loader } from "lucide-react";
 import Review from "../../components/Review";
+import Map from "../../features/map/Map";
 import { toast } from "react-hot-toast";
 
 function Show() {
@@ -91,8 +92,10 @@ function Show() {
                 </div>
             </div>
 
-            <hr className="my-6 border-gray-300" />
-            <Review listing={listing} setListing={setListing} listingId={id}/>
+            <Review listing={listing} setListing={setListing} listingId={id} />
+            {
+                listing.geometry.coordinates.length > 0 && <Map geometry={listing.geometry.coordinates} />
+            }
         </div>
     );
 }
