@@ -27,18 +27,21 @@ const listSchema = new Schema({
     },
     geometry: {
         type: {
-          type: String, // Don't do `{ location: { type: String } }`
-          enum: ['Point'], // 'location.type' must be 'Point'
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
         },
         coordinates: {
-          type: [Number],
+            type: [Number],
         }
-      },
+    },
     category: {
         type: String,
         enum: ["Hostels", "Rooms", "PGs", "Shared Flats", "Studio Apartments", "Cheap Rent", "Iconic Cities", "Luxury Villas", "House", "Penthouses"],
     },
-    contact: String, // storing mobile number of the user
+    contact: {
+        type: String,
+        required: true
+    },  // storing mobile number of the user
 });
 
 listSchema.post("findOneAndDelete", async (listing) => {

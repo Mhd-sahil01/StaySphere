@@ -25,6 +25,7 @@ function Edit() {
   }, [id]);
 
   const handleUpdate = async (formData) => {
+    const contactTest = /^[0-9]{10}$/;
     if (!formData.title || formData.title.trim().length === 0) {
       toast.error("Title cannot be empty");
       return;
@@ -33,10 +34,18 @@ function Edit() {
       toast.error("Description cannot be empty");
       return;
     }
+    if (!formData.contact || formData.contact.trim().length === 0) {
+      toast.error("Contact number cannot be empty");
+      return;
+    }
     if (!formData.price) {
       toast.error("Price cannot be empty");
       return;
     }
+    if (!contactTest.test(formData.contact)) {
+      toast.error("Contact number must be valid.");
+      return;
+    } 
 
     try {
       setIsUpdating(true);
@@ -46,6 +55,7 @@ function Edit() {
       data.append("price", formData.price);
       data.append("location", formData.location);
       data.append("country", formData.country);
+      data.append("contact", formData.contact);
 
       if (formData.image) {
         data.append("image", formData.image);

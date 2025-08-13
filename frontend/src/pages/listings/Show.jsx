@@ -75,6 +75,10 @@ function Show() {
                     <p className="text-gray-500">
                         {listing.location}, {listing.country}
                     </p>
+                    <p className="text-gray-600">
+                        <span className="font-medium">Contact number :</span>{"  "}
+                        {listing.contact}
+                    </p>
                 </div>
                 <div className="flex flex-wrap justify-between items-center gap-2 p-4 border-t">
                     <button

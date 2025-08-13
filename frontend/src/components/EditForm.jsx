@@ -6,6 +6,7 @@ function EditForm({ listing, originalImageUrl, onSubmit }) {
     description: listing.description,
     location: listing.location,
     country: listing.country,
+    contact: listing.contact,
     price: listing.price,
     image: null,
   });
@@ -47,40 +48,61 @@ function EditForm({ listing, originalImageUrl, onSubmit }) {
         />
       </div>
       <div>
-        <p className="mb-1">Current Image:</p>
+        <p className="mb-1">Current Image</p>
         <img src={originalImageUrl} className="h-40 object-cover mb-2" />
         <input type="file" name="image" onChange={handleChange} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-          placeholder="Price"
-          required
-        />
-        <input
-          type="text"
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-          placeholder="Country"
-          required
-        />
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="md:w-[30%] w-full">
+          <label className="block mb-1">Price</label>
+          <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Price"
+            required
+          />
+        </div>
+        <div className="md:w-[70%] w-full">
+          <label className="block mb-1">Contact Number</label>
+          <input
+            type="text"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Contact Number"
+            required
+          />
+        </div>
       </div>
-      <div>
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-          placeholder="Location"
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1">Country</label>
+          <input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Country"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-1">Location</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="Location"
+            required
+          />
+        </div>
       </div>
       <button
         type="submit"
@@ -90,6 +112,7 @@ function EditForm({ listing, originalImageUrl, onSubmit }) {
       </button>
     </form>
   );
+  
 }
 
 export default EditForm;

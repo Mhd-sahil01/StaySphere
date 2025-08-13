@@ -53,7 +53,7 @@ module.exports.createListing = async (req, res, next) => {
 
 // to update a existing listing 
 module.exports.updateListing = async (req, res) => {
-        const { title, price, description, location, country } = req.body;
+        const { title, price, description, location, country, contact } = req.body;
         let listing = await Listing.findByIdAndUpdate(req.params.id,  //find and update listing by id
             {
                 title,
