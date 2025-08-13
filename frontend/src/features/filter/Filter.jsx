@@ -9,7 +9,8 @@ import {
     faMountainCity,
     faSnowflake,
     faShopLock,
-    faCrown
+    faCrown,
+    faList 
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,6 +33,13 @@ const Filter = () => {
     return (
         <div className="w-full max-w-screen-xl mx-auto">
             <div className="flex item-center gap-3 sm:gap-4 md:gap-6 py-3 overflow-x-auto scroll-smooth no-scrollbar ">
+            <div
+                        onClick={() => navigate("/")}
+                        className="flex flex-col items-center cursor-pointer text-gray-400 hover:text-gray-600 min-w-[90px] rounded-xl shadow-sm hover:scale-105 transition-transform"
+                    >
+                       <FontAwesomeIcon icon={faList} className="text-lg md:text-xl mb-2" />
+                        <span className="text-xs text-center">All</span>
+                    </div>
                 {filterItems.map((item) => (
                     <div
                         key={item.id}
