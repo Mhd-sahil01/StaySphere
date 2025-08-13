@@ -12,6 +12,7 @@ module.exports.listingSchema = Joi.object({
       filename: Joi.string().required()
     }),
     category: Joi.string(),
+    contact: Joi.string().required(),
 });
 
 

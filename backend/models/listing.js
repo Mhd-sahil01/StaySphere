@@ -38,6 +38,7 @@ const listSchema = new Schema({
         type: String,
         enum: ["Hostels", "Rooms", "PGs", "Shared Flats", "Studio Apartments", "Cheap Rent", "Iconic Cities", "Luxury Villas", "House", "Penthouses"],
     },
+    contact: String, // storing mobile number of the user
 });
 
 listSchema.post("findOneAndDelete", async (listing) => {

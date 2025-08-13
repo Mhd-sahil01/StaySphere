@@ -25,7 +25,7 @@ module.exports.showListing = async (req, res) => {
 
 // to create a new lisiting
 module.exports.createListing = async (req, res, next) => {
-    const { title, price, description, location, country, category } = req.body;
+    const { title, price, description, location, country, category, contact } = req.body;
         let response = await geocodingClient // for map
             .forwardGeocode({
                 query: location,
@@ -41,7 +41,8 @@ module.exports.createListing = async (req, res, next) => {
             description,
             location,
             country,
-            category
+            category,
+            contact
         });
         newListing.owner = req.user._id;
         newListing.image = { url, filename };
@@ -59,7 +60,8 @@ module.exports.updateListing = async (req, res) => {
                 price,
                 description,
                 location,
-                country
+                country,
+                contact
             }, { new: true });
 
         if (typeof req.file != "undefined") {
