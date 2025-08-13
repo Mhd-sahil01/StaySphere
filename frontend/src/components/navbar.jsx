@@ -1,140 +1,147 @@
-import { Link } from "react-router-dom";
-import { useAuthStore } from "../features/auth/useAuthStore";
-import { LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../features/auth/useAuthStore";
+import { LogOut, Menu, X } from "lucide-react";
 
 function Navbar() {
     const { logout, user } = useAuthStore();
     const [searchQuery, setSearchQuery] = useState("");
+    const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
-    const handleSearch = async (event) => {
-        event.preventDefault();
+    const handleSearch = (e) => {
+        e.preventDefault();
         if (searchQuery.trim()) {
-            navigate(`/search?place=${encodeURIComponent(searchQuery.trim())}`)
+            navigate(`/search?place=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery("");
+            setMenuOpen(false);
         }
-        setSearchQuery("");
-    }
-
-    const handleInput = (event) => {
-        setSearchQuery(event.target.value);
-    }
+    };
 
     return (
-        <div className="navbar bg-base-100 sticky top-0 z-50 shadow-sm">
-            <div className="navbar-start gap-1 md:gap-2 flex-1">
-                <a className="text-lg font-bold whitespace-nowrap">StaySphere</a>
+        <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+                <Link to="/" className="text-xl font-bold">
+                    StaySphere
+                </Link>
 
-                {/* Search bar  */}
-                <form onSubmit={handleSearch} className="search-bar hidden md:flex justify-center gap-1 mx-1 flex-1 w-1/2 max-w-md">
-                    <div className="form-control flex-1">
-                        <input
-                            type="text"
-                            placeholder="Search Locations..."
-                            className="input input-bordered w-full"
-                            value={searchQuery}
-                            onChange={handleInput}
-                        />
-                    </div>
-                    <button className="btn btn-ghost btn-circle" type="submit">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                {/* Search bar for desktop */}
+                <form
+                    onSubmit={handleSearch}
+                    className="hidden md:flex items-center border rounded overflow-hidden"
+                >
+                    <input
+                        type="text"
+                        placeholder="Search locations..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="px-3 py-2 outline-none w-64"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-blue-200 hover:bg-blue-500 text-white px-4 py-2"
+                    >
+                        Search
                     </button>
                 </form>
-            </div>
 
-            <div className="navbar-end flex-none">
-                {/* Mobile menu button - visible only on small screens */}
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle md:hidden">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h7" />
-                        </svg>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        {/* Mobile search bar */}
-                        <li>
-                            <form onSubmit={handleSearch} className="flex gap-1 w-full relative">
-                                <input
-                                    type="text"
-                                    placeholder="Locations..."
-                                    className="input input-bordered flex-1 w-11/12"
-                                    value={searchQuery}
-                                    onChange={handleInput}
-                                />
-                                <button type="submit" className="btn btn-ghost btn-circle absolute right-0">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-5 w-5"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                        />
-                                    </svg>
-                                </button>
-                            </form>
-                        </li>
-                        <li><Link to={"/"}>Explore</Link></li>
-                        <li><Link to={"/new"}>Rent It Now</Link></li>
-                        {
-                            user ? (
-                                <li><Link onClick={logout}><LogOut size={15} />Logout</Link></li>
-                            ) : (
-                                <>
-                                    <li>
-                                        <div className="flex gap-2">
-                                            <Link to={"/signup"} className="hover:text-green-400 font-bold">Signup</Link>
-                                            <Link to={"/login"} className="hover:text-green-400 font-bold">Login</Link>
-                                        </div>
-                                    </li>
-                                </>
-                            )
-                        }
-                    </ul>
-                </div>
-
-                {/* Desktop navigation - hidden on mobile */}
-                <div className="hidden md:flex md:gap-1 lg:gap-2">
-                    <Link to={"/"} className="btn btn-ghost min-w-20">Explore</Link>
-                    <Link to={"/new"} className="btn btn-ghost min-w-20">Rent It Now</Link>
+                {/* Links for desktop*/}
+                <div className="hidden md:flex items-center gap-4">
+                    <Link to="/" className="hover:bg-blue-100 rounded px-2 py-1 transition-colors">Explore</Link>
+                    <Link to="/new" className="hover:bg-blue-100 rounded px-2 py-1 transition-colors">Rent It Now</Link>
                     {user ? (
-                        <Link onClick={logout} className="btn btn-ghost min-w-20">Logout <LogOut size={20} /> </Link>
+                        <button
+                            onClick={logout}
+                            className="flex items-center gap-1 hover:bg-red-100 rounded px-2 py-1 transition-colors text-red-500"
+                        >
+                            <LogOut size={18} /> Logout
+                        </button>
                     ) : (
                         <>
-                            <Link to={"/signup"} className="btn btn-ghost min-w-20">Signup</Link>
-                            <Link to={"/login"} className="btn btn-ghost min-w-20">Login</Link>
+                            <Link to="/signup" className="hover:bg-blue-100 rounded px-2 py-1 transition-colors">Signup</Link>
+                            <Link to="/login" className="hover:bg-blue-100 rounded px-2 py-1 transition-colors">Login</Link>
                         </>
                     )}
                 </div>
+
+                {/* Mobile menu button*/}
+                <button
+                    className="md:hidden p-2"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    {menuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
             </div>
-        </div>
+
+            {/* Mobile menu */}
+            {menuOpen && (
+                <div className="md:hidden bg-white border-t px-6 py-4 space-y-4">
+                    {/* Mobile search bar */}
+                    <form
+                        onSubmit={handleSearch}
+                        className="flex items-center border rounded overflow-hidden"
+                    >
+                        <input
+                            type="text"
+                            placeholder="Search locations..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="px-3 py-2 outline-none flex-1"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-blue-200 hover:bg-blue-500 text-white px-4 py-2"
+                        >
+                            Search
+                        </button>
+                    </form>
+
+                    {/* Links */}
+                    <Link
+                        to="/"
+                        className="block hover:bg-blue-100 rounded px-2 py-1 transition-colors"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                        Explore
+                    </Link>
+                    <Link
+                        to="/new"
+                        className="block hover:bg-blue-100 rounded px-2 py-1 transition-colors"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                        Rent It Now
+                    </Link>
+                    {user ? (
+                        <button
+                            onClick={() => {
+                                logout();
+                                setMenuOpen(false);
+                            }}
+                            className="flex items-center gap-1 hover:bg-red-100 rounded px-2 py-1 transition-colors text-red-500"
+                        >
+                            <LogOut size={18} /> Logout
+                        </button>
+                    ) : (
+                        <>
+                            <Link
+                                to="/signup"
+                                className="block hover:bg-blue-100 rounded px-2 py-1 transition-colors"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Signup
+                            </Link>
+                            <Link
+                                to="/login"
+                                className="block hover:bg-blue-100 rounded px-2 py-1 transition-colors"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Login
+                            </Link>
+                        </>
+                    )}
+                </div>
+            )}
+        </nav>
     );
 }
 
