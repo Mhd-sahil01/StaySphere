@@ -14,7 +14,7 @@ function CreateNew() {
     price: "",
     country: "",
     location: "",
-    category: "",
+    category: "Rooms",
     contact: "",
   });
 
