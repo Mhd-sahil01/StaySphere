@@ -13,6 +13,7 @@ import FilterDisplay from './pages/listings/FilterDisplay.jsx';
 import SearchResult from './pages/listings/SearchResult.jsx';
 import Show from './pages/listings/Show.jsx';
 import Edit from './pages/listings/Edit.jsx';
+import UserPage from './pages/auth/UserPage.jsx';
 
 function App() {
   const { user, checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore();
@@ -37,11 +38,12 @@ function App() {
         <Route path='/' element={<Index />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/filters/:type' element={<FilterDisplay />} />
+        <Route path='/filters/:type' element={<FilterDisplay />}/>
         <Route path='/new' element={user? <CreateNew /> : <Navigate to={"/login"}/>} />
         <Route path="/search" element={<SearchResult />} />
         <Route path='/show/:id' element={<Show/>}/>
         <Route path='/listings/:id/edit' element={<Edit/>}/>
+        <Route path='/profile' element={user && <UserPage/>}/>
       </Routes>
       <Toaster/>
       </div>

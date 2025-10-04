@@ -7,7 +7,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center flex flex-col gap-5 bg-base-200 text-base-content p-4">    
+    <footer className="footer footer-center flex flex-col gap-5 bg-pink-100 text-base-content p-4">    
       <nav>
         <div className="flex gap-4">
           <a
@@ -18,7 +18,7 @@ const Footer = () => {
           >
             <FontAwesomeIcon
               icon={faInstagram}
-              className="text-gray-600 hover:text-primary text-2xl transition-colors"
+              className="text-gray-600 hover:text-[#E1306C] text-2xl transition-colors"
             />
           </a>
 
